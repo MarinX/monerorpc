@@ -691,7 +691,10 @@ func TestWalletIncomingTransfers(t *testing.T) {
 			"global_index": 594994,
 			"key_image": "7e561394806afd1be61980cc3431f6ef3569fa9151cd8d234f8ec13aa145695e",
 			"spent": false,
-			"subaddr_index": 3,
+			"subaddr_index": {
+        		"major": 0,
+        		"minor": 3
+      		},
 			"tx_hash": "106d4391a031e5b735ded555862fec63233e34e5fa4fc7edcfdbe461c275ae5b",
 			"tx_size": 157
 		  },{
@@ -699,7 +702,10 @@ func TestWalletIncomingTransfers(t *testing.T) {
 			"global_index": 594997,
 			"key_image": "e76c0a3bfeaae35e4173712f782eb34011198e26b990225b71aa787c8ba8a157",
 			"spent": false,
-			"subaddr_index": 3,
+			"subaddr_index": {
+        		"major": 0,
+        		"minor": 3
+      		},
 			"tx_hash": "0bd959b59117ee1254bd8e5aa8e77ec04ef744144a1ffb2d5c1eb9380a719621",
 			"tx_size": 158
 		  }]
