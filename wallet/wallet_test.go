@@ -680,7 +680,10 @@ func TestWalletIncomingTransfers(t *testing.T) {
 			"global_index": 122405,
 			"key_image": "768f5144777eb23477ab7acf83562581d690abaf98ca897c03a9d2b900eb479b",
 			"spent": true,
-			"subaddr_index": 3,
+			"subaddr_index": {
+        		"major": 0,
+        		"minor": 3
+      		},
 			"tx_hash": "f53401f21c6a43e44d5dd7a90eba5cf580012ad0e15d050059136f8a0da34f6b",
 			"tx_size": 159
 		  },{
