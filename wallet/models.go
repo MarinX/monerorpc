@@ -574,7 +574,7 @@ type IncomingTransfersRequest struct {
 	// Return transfers for this account. (defaults to 0)
 	AccountIndex uint64 `json:"account_index,omitempty"`
 	// Return transfers sent to these subaddresses.
-	SubaddrIndices uint64 `json:"subaddr_indices,omitempty"`
+	SubaddrIndices Index `json:"subaddr_indices,omitempty"`
 	// Enable verbose output, return key image if true.
 	Verbose bool `json:"verbose,omitempty"`
 }
