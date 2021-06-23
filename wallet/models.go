@@ -574,7 +574,7 @@ type IncomingTransfersRequest struct {
 	// Return transfers for this account. (defaults to 0)
 	AccountIndex uint64 `json:"account_index,omitempty"`
 	// Return transfers sent to these subaddresses.
-	SubaddrIndices uint64 `json:"subaddr_indices,omitempty"`
+	SubaddrIndices Index `json:"subaddr_indices,omitempty"`
 	// Enable verbose output, return key image if true.
 	Verbose bool `json:"verbose,omitempty"`
 }
@@ -590,7 +590,7 @@ type IncomingTransfer struct {
 	// Indicates if this transfer has been spent.
 	Spent bool `json:"spent"`
 	// Subaddress index for incoming transfer.
-	SubaddrIndex uint64 `json:"subaddr_index"`
+	SubaddrIndex Index `json:"subaddr_index"`
 	// Several incoming transfers may share the same hash if they were in the same transaction.
 	TxHash string `json:"tx_hash"`
 	// Size of transaction in bytes.
