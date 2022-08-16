@@ -525,3 +525,19 @@ type GetOutputDistributionResponse struct {
 	// General RPC error code. "OK" means everything looks good.
 	Status string `json:"status"`
 }
+
+type GenerateBlocksRequest struct {
+	// AmountOfBlocks is the number of blocks to be generated.
+	AmountOfBlocks uint64 `json:"amount_of_blocks,omitempty"`
+	// WalletAddress is the address of the wallet that will get the rewards
+	// of the coinbase transaction for such the blocks generates.
+	WalletAddress string `json:"wallet_address,omitempty"`
+	PreviousBlock string `json:"prev_block,omitempty"`
+	StartingNonce uint64 `json:"starting_nonce,omitempty"`
+}
+type GenerateBlocksResponse struct {
+	Blocks    []string `json:"blocks"`
+	Height    uint64   `json:"height"`
+	Status    string   `json:"status"`
+	Untrusted bool     `json:"untrusted"`
+}

@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/gorilla/rpc/v2/json2"
+	"github.com/matryer/is"
 )
 
 type MockMoneroRPC struct {
@@ -747,4 +748,34 @@ func TestDaemonGetOutputDistribution(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+}
+
+func TestDaemonGenerateBlocks(t *testing.T) {
+	output := `{
+	"id": "0",
+	"jsonrpc": "2.0",
+	"result": {
+			"blocks": ["49b712db7760e3728586f8434ee8bc8d7b3d410dac6bb6e98bf5845c83b917e4"],
+			"height": 9783,
+			"status": "OK",
+			"untrusted": false
+		}
+	}
+	`
+	server := setupServer(t, "generateblocks", output)
+	defer server.Close()
+
+	w := New(getClient(server.URL, server.Client()))
+
+	res, err := w.GenerateBlocks(&GenerateBlocksRequest{})
+	if err != nil {
+		t.Error(err)
+	}
+
+	is.New(t).Equal(res, &GenerateBlocksResponse{
+		Blocks:    []string{"49b712db7760e3728586f8434ee8bc8d7b3d410dac6bb6e98bf5845c83b917e4"},
+		Height:    9783,
+		Status:    "OK",
+		Untrusted: false,
+	})
 }
