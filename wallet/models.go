@@ -30,6 +30,7 @@ type GetBalanceRequest struct {
 
 // PerSubaddress model
 type PerSubaddress struct {
+	AccountIndex uint32 `json:"account_index"`
 	// Index of the subaddress in the account.
 	AddressIndex uint64 `json:"address_index"`
 	// Address at this index. Base58 representation of the public keys.
@@ -42,6 +43,8 @@ type PerSubaddress struct {
 	Label string `json:"label"`
 	// Number of unspent outputs available for the subaddress.
 	NumUnspentOutputs uint64 `json:"num_unspent_outputs"`
+	BlocksToUnlock    uint64 `json:"blocks_to_unlock"`
+	TimeToUnlock      uint64 `json:"time_to_unlock"`
 }
 
 // GetBalanceResponse represents the response model for GetBalance
@@ -53,7 +56,9 @@ type GetBalanceResponse struct {
 	// True if importing multisig data is needed for returning a correct balance.
 	MultisigImportNeeded bool `json:"multisig_import_needed"`
 	// Array of subaddress information; Balance information for each subaddress in an account.
-	PerSubaddress []PerSubaddress `json:"per_subaddress"`
+	PerSubaddress  []PerSubaddress `json:"per_subaddress"`
+	BlocksToUnlock uint64          `json:"blocks_to_unlock"`
+	TimeToUnlock   uint64          `json:"time_to_unlock"`
 }
 
 // GetAddressRequest represents the request model for GetAddress
