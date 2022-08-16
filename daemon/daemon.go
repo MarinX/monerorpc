@@ -3,6 +3,7 @@ package daemon
 // Daemon interface is a list of the monerod daemon RPC calls, their inputs and outputs, and examples of each.
 // Many RPC calls use the daemon's JSON RPC interface while others use their own interfaces, as demonstrated below.
 type Daemon interface {
+	GenerateBlocks(req *GenerateBlocksRequest) (*GenerateBlocksResponse, error)
 	// GetBlockCount Look up how many blocks are in the longest chain known to the node.
 	GetBlockCount() (*GetBlockCountResponse, error)
 	// OnGetBlockHash Look up a block's hash by its height.
@@ -72,6 +73,12 @@ func New(client MoneroRPC) Daemon {
 	return &daemon{
 		client: client,
 	}
+}
+
+func (d *daemon) GenerateBlocks(req *GenerateBlocksRequest) (*GenerateBlocksResponse, error) {
+	res := new(GenerateBlocksResponse)
+	err := d.client.Do("generateblocks", req, res)
+	return res, err
 }
 
 func (d *daemon) GetBlockCount() (*GetBlockCountResponse, error) {
