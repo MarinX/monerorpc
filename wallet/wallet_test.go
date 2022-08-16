@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/gorilla/rpc/v2/json2"
+	"github.com/matryer/is"
 )
 
 type MockMoneroRPC struct {
@@ -85,24 +86,22 @@ func TestWalletGetBalance(t *testing.T) {
 		"id": "0",
 		"jsonrpc": "2.0",
 		"result": {
-		  "balance": 157443303037455077,
-		  "multisig_import_needed": false,
-		  "per_subaddress": [{
-			"address": "55LTR8KniP4LQGJSPtbYDacR7dz8RBFnsfAKMaMuwUNYX6aQbBcovzDPyrQF9KXF9tVU6Xk3K8no1BywnJX6GvZX8yJsXvt",
+			"balance": 17981101058456048,
+			"blocks_to_unlock": 59,
+			"multisig_import_needed": false,
+			"per_subaddress": [{
+			"account_index": 0,
+			"address": "4Ae8FJHMJsnfsghVcg1u3SWqcLyUKCzNVMq8JLZCzgpSKCu6X2mEWZJXAqQpyJsQ11KVXgJDJ24LaBWCjYK8jQXU4NUpiJn",
 			"address_index": 0,
-			"balance": 157360317826255077,
+			"balance": 17981101058456048,
+			"blocks_to_unlock": 59,
 			"label": "Primary account",
-			"num_unspent_outputs": 5281,
-			"unlocked_balance": 157360317826255077
-		  },{
-			"address": "7BnERTpvL5MbCLtj5n9No7J5oE5hHiB3tVCK5cjSvCsYWD2WRJLFuWeKTLiXo5QJqt2ZwUaLy2Vh1Ad51K7FNgqcHgjW85o",
-			"address_index": 1,
-			"balance": 59985211200000,
-			"label": "",
-			"num_unspent_outputs": 1,
-			"unlocked_balance": 59985211200000
-		  }],
-		  "unlocked_balance": 157443303037455077
+			"num_unspent_outputs": 512,
+			"time_to_unlock": 0,
+			"unlocked_balance": 15909955156562018
+			}],
+			"time_to_unlock": 0,
+			"unlocked_balance": 15909955156562018
 		}
 	  }`
 	server := setupServer(t, "get_balance", output)
@@ -110,10 +109,31 @@ func TestWalletGetBalance(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetBalance(&GetBalanceRequest{})
+	res, err := w.GetBalance(&GetBalanceRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+
+	is.New(t).Equal(res, &GetBalanceResponse{
+		Balance:              17981101058456048,
+		BlocksToUnlock:       59,
+		MultisigImportNeeded: false,
+		PerSubaddress: []PerSubaddress{
+			{
+				AccountIndex:      0,
+				Address:           "4Ae8FJHMJsnfsghVcg1u3SWqcLyUKCzNVMq8JLZCzgpSKCu6X2mEWZJXAqQpyJsQ11KVXgJDJ24LaBWCjYK8jQXU4NUpiJn",
+				AddressIndex:      0,
+				Balance:           17981101058456048,
+				BlocksToUnlock:    59,
+				Label:             "Primary account",
+				NumUnspentOutputs: 512,
+				TimeToUnlock:      0,
+				UnlockedBalance:   15909955156562018,
+			},
+		},
+		TimeToUnlock:    0,
+		UnlockedBalance: 15909955156562018,
+	})
 }
 
 func TestWalletGetAddress(t *testing.T) {
