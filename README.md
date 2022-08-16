@@ -1,20 +1,18 @@
-Monero RPC Client in Go
-=======================
+# Monero RPC Client in Go
 
 [![Build Status](https://travis-ci.org/MarinX/monerorpc.svg?branch=master)](https://travis-ci.org/MarinX/monerorpc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/MarinX/monerorpc)](https://goreportcard.com/report/github.com/MarinX/monerorpc)
 [![GoDoc](https://godoc.org/github.com/MarinX/monerorpc?status.svg)](https://godoc.org/github.com/MarinX/monerorpc)
 [![License MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
-
 Full Monero RPC client(Wallet AND Daemon) written in go
 
 ## Version
-Client was written per docs on getmonero.org. 
 
-`Last update on docs was on 2018-09-14 after merged commit bb30a7236725e456138f055f96a634c75ce2b491 (Wallet RPC version 1.3), and at block height 1643308.`
+Client was written per docs on getmonero.org.
 
 ## Preposition
+
 Running monerod with RPC enabled
 
 ## Installation
@@ -30,7 +28,8 @@ import "github.com/MarinX/monerorpc"
 ```
 
 ## Wallet example
-``` go
+
+```go
 package main
 
 import (
@@ -263,6 +262,7 @@ func main() {
 
 ```go
 type Daemon interface {
+	GenerateBlocks(req *GenerateBlocksRequest) (*GenerateBlocksResponse, error)
 	// GetBlockCount Look up how many blocks are in the longest chain known to the node.
 	GetBlockCount() (*GetBlockCountResponse, error)
 	// OnGetBlockHash Look up a block's hash by its height.
@@ -320,12 +320,15 @@ type Daemon interface {
 ```
 
 ## Contributing
+
 PR's are welcome. Please read [CONTRIBUTING.md](https://github.com/MarinX/monerorpc/blob/master/CONTRIBUTING.md) for more info
 
 ## FAQ
 
 ### There is a method missing, can I use this library?
+
 Yes, client has a `Do` method which accepts any struct. Example:
+
 ```go
 package main
 
@@ -355,13 +358,11 @@ func main() {
 }
 
 ```
+
 ### I found a bug/issue
+
 Please submit an issue on github or if you know how to fix it, PR's are welcome.
 
 ### Version of the docs has changed, what now?
-I will try to update the client as per docs changes. You are free to create an issue to notify me. I dont monitor monero docs 24/7 :)
 
-## Donate
-```sh
-48KX4E4MRryd5QsVuctroyF1CVHgtGB695BjDxmFTnf1M3r9zpbe86HTyeAJ5TegQAZPahFjitTrVQxUi1WVLjPFLWzvMec
-```
+I will try to update the client as per docs changes. You are free to create an issue to notify me. I dont monitor monero docs 24/7 :)
