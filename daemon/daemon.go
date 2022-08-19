@@ -33,11 +33,11 @@ type Daemon interface {
 	// HardForkInfo Look up information regarding hard fork voting and readiness.
 	HardForkInfo() (*HardForkInfoResponse, error)
 	// SetBans Ban another node by IP.
-	SetBans(req *SetBansRequest) (*SetBansResponse, error)
+	SetBans(req *SetBansRequest) error
 	// GetBans Get list of banned IPs.
 	GetBans() (*GetBansResponse, error)
 	// FlushTxpool Flush tx ids from transaction pool
-	FlushTxpool(req *FlushTxpoolRequest) (*FlushTxpoolResponse, error)
+	FlushTxpool(req *FlushTxpoolRequest) error
 	// GetOutputHistogram Get a histogram of output amounts. For all amounts (possibly filtered by parameters), gives the number of outputs on the chain for that amount.
 	// RingCT outputs counts as 0 amount.
 	GetOutputHistogram(req *GetOutputHistogramRequest) (*GetOutputHistogramResponse, error)
@@ -50,7 +50,7 @@ type Daemon interface {
 	// GetAlternateChains Display alternative chains seen by the node.
 	GetAlternateChains() (*GetAlternateChainsResponse, error)
 	// RelayTx Relay a list of transaction IDs.
-	RelayTx(req *RelayTxRequest) (*RelayTxResponse, error)
+	RelayTx(req *RelayTxRequest) error
 	// SyncInfo Get synchronisation informations
 	SyncInfo() (*SyncInfoResponse, error)
 	// GetTxpoolBacklog Get all transaction pool backlog
@@ -153,10 +153,9 @@ func (d *daemon) HardForkInfo() (*HardForkInfoResponse, error) {
 	return res, err
 }
 
-func (d *daemon) SetBans(req *SetBansRequest) (*SetBansResponse, error) {
-	res := new(SetBansResponse)
-	err := d.client.Do("set_bans", req, res)
-	return res, err
+func (d *daemon) SetBans(req *SetBansRequest) error {
+	err := d.client.Do("set_bans", req, nil)
+	return err
 }
 
 func (d *daemon) GetBans() (*GetBansResponse, error) {
@@ -165,10 +164,9 @@ func (d *daemon) GetBans() (*GetBansResponse, error) {
 	return res, err
 }
 
-func (d *daemon) FlushTxpool(req *FlushTxpoolRequest) (*FlushTxpoolResponse, error) {
-	res := new(FlushTxpoolResponse)
-	err := d.client.Do("flush_txpool", req, res)
-	return res, err
+func (d *daemon) FlushTxpool(req *FlushTxpoolRequest) error {
+	err := d.client.Do("flush_txpool", req, nil)
+	return err
 }
 
 func (d *daemon) GetOutputHistogram(req *GetOutputHistogramRequest) (*GetOutputHistogramResponse, error) {
@@ -201,10 +199,9 @@ func (d *daemon) GetAlternateChains() (*GetAlternateChainsResponse, error) {
 	return res, err
 }
 
-func (d *daemon) RelayTx(req *RelayTxRequest) (*RelayTxResponse, error) {
-	res := new(RelayTxResponse)
-	err := d.client.Do("relay_tx", req, res)
-	return res, err
+func (d *daemon) RelayTx(req *RelayTxRequest) error {
+	err := d.client.Do("relay_tx", req, nil)
+	return err
 }
 
 func (d *daemon) SyncInfo() (*SyncInfoResponse, error) {

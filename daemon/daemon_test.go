@@ -77,10 +77,13 @@ func TestDaemonGetBlockCount(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetBlockCount()
+	res, err := w.GetBlockCount()
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetBlockCountResponse{
+		Count: 993163,
+	})
 }
 
 func TestDaemonOnGetBlockHash(t *testing.T) {
@@ -94,10 +97,11 @@ func TestDaemonOnGetBlockHash(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.OnGetBlockHash([]uint64{1})
+	res, err := w.OnGetBlockHash([]uint64{1})
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, "e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6")
 }
 
 func TestDaemonGetBlockTemplate(t *testing.T) {
@@ -121,10 +125,20 @@ func TestDaemonGetBlockTemplate(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetBlockTemplate(&GetBlockTemplateRequest{})
+	res, err := w.GetBlockTemplate(&GetBlockTemplateRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetBlockTemplateResponse{
+		BlockhashingBlob:  "070786a498d705f8dc58791266179087907a2ff4cd883615216749b97d2f12173171c725a6f84a00000000fc751ea4a94c2f840751eaa36138eee66dda15ef554e7d6594395827994e31da10",
+		BlocktemplateBlob: "070786a498d705f8dc58791266179087907a2ff4cd883615216749b97d2f12173171c725a6f84a0000000002aeab5f01fff2aa5f01e0a9d0f2f08a01028fdb3d5b5a2c363d36ea17a4add99a23a3ec7935b4c3e1e0364fcc4295c7a2ef5f01f912b15f5d17c1539d4722f79d8856d8654c5af87f54cfb3a4ff7f6b512b2a08023c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f1755090c809421d69873c161e7969b8bf33cee3b451dd4859bfc244a705f0b4900498f804b6023e13fa023a0fb759e8b7c9a39506a21442bc47077beeedc6b78d34c4ebdae91bd96097ccc9a882bc5056568b0d2f1f06559368fea4acba8e745444e883e53156d5083c1fd260edf05292934c8b40c098b81fe4e261720bdd272b209e317247a1d2c55dc4718891af0d16273c5a610f36f382a3bf50f54808aaa6a508e51d4601dd0d8fbf8b3b1685066ce121666a1409e8ac7a4d673c1cc36d10b825f764af647441f53230518e4d2efbcf8791c6060912c76e90db4982a66d51bbd96290bbb34db8080b216c2940cec407260bf5e2c3a5ee280835f15298f0801e9d98c4d414792282fbc2c28c3e20bc0fcb1829b5c3ad8f8d20847be8fdb2a949fd96f0205fbd6d271c880c5d8c83e9813606cd803a44d377fdeae45bfa67112132af601e9b3b0613ba7dff2ec3d4b935c447b47bfe39f7b950981b2f4c66c0d853e2218f1f69229a9b608c3d98be09b6d4d640a9f6ff0e920dbacf7e58b59554c0b398b1ae4b1d497104b4e4e745d850eed7eddb8aa93437427bf442ae5beb22cbf10a8fa738ea38cfa5d86dfd30675d4be11a38016e36936fd5601e52643e8b8bc433702ea7ae6149309c95b898cc854850e73fe0b95c5b8879b7325ecd4",
+		Difficulty:        61043624293,
+		ExpectedReward:    4771949057248,
+		Height:            1561970,
+		PrevHash:          "f8dc58791266179087907a2ff4cd883615216749b97d2f12173171c725a6f84a",
+		ReservedOffset:    129,
+		Untrusted:         false,
+	})
 }
 
 func TestDaemonSubmitBlock(t *testing.T) {
@@ -180,10 +194,29 @@ func TestDaemonGetLastBlockHeader(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetLastBlockHeader()
+	res, err := w.GetLastBlockHeader()
 	if err != nil {
 		t.Error(err)
 	}
+
+	is.New(t).Equal(res, &GetLastBlockHeaderResponse{
+		BlockHeader: BlockHeader{
+			BlockSize:    62774,
+			Depth:        0,
+			Difficulty:   60097900840,
+			Hash:         "3a289b8fa88b10e2163826c230b45d79f2be37d14fa3153ee58ff8a427782d14",
+			Height:       1562023,
+			MajorVersion: 7,
+			MinorVersion: 7,
+			Nonce:        3789681204,
+			NumTxes:      5,
+			OrphanStatus: false,
+			PrevHash:     "743e5d0a26849efe27b96086f2c4ecc39a0bc744bf21473dad6710221aff6ac3",
+			Reward:       4724029079703,
+			Timestamp:    1525029411,
+		},
+		Untrusted: false,
+	})
 }
 
 func TestDaemonGetBlockHeaderByHash(t *testing.T) {
@@ -215,10 +248,29 @@ func TestDaemonGetBlockHeaderByHash(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetBlockHeaderByHash(&GetBlockHeaderByHashRequest{})
+	res, err := w.GetBlockHeaderByHash(&GetBlockHeaderByHashRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+
+	is.New(t).Equal(res, &GetBlockHeaderByHashResponse{
+		BlockHeader: BlockHeader{
+			BlockSize:    210,
+			Depth:        649717,
+			Difficulty:   815625611,
+			Hash:         "e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6",
+			Height:       912345,
+			MajorVersion: 1,
+			MinorVersion: 2,
+			Nonce:        1646,
+			NumTxes:      0,
+			OrphanStatus: false,
+			PrevHash:     "b61c58b2e0be53fad5ef9d9731a55e8a81d972b8d90ed07c04fd37ca6403ff78",
+			Reward:       7388968946286,
+			Timestamp:    1452793716,
+		},
+		Untrusted: false,
+	})
 }
 
 func TestDaemonGetBlockHeaderByHeight(t *testing.T) {
@@ -250,10 +302,28 @@ func TestDaemonGetBlockHeaderByHeight(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetBlockHeaderByHeight(&GetBlockHeaderByHeightRequest{})
+	res, err := w.GetBlockHeaderByHeight(&GetBlockHeaderByHeightRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetBlockHeaderByHeightResponse{
+		BlockHeader: BlockHeader{
+			BlockSize:    210,
+			Depth:        649721,
+			Difficulty:   815625611,
+			Hash:         "e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6",
+			Height:       912345,
+			MajorVersion: 1,
+			MinorVersion: 2,
+			Nonce:        1646,
+			NumTxes:      0,
+			OrphanStatus: false,
+			PrevHash:     "b61c58b2e0be53fad5ef9d9731a55e8a81d972b8d90ed07c04fd37ca6403ff78",
+			Reward:       7388968946286,
+			Timestamp:    1452793716,
+		},
+		Untrusted: false,
+	})
 }
 
 func TestDaemonGetBlockHeadersRange(t *testing.T) {
@@ -299,10 +369,45 @@ func TestDaemonGetBlockHeadersRange(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetBlockHeadersRange(&GetBlockHeadersRangeRequest{})
+	res, err := w.GetBlockHeadersRange(&GetBlockHeadersRangeRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetBlockHeadersRangeResponse{
+		Headers: []BlockHeader{
+			{
+				BlockSize:    301413,
+				Depth:        16085,
+				Difficulty:   134636057921,
+				Hash:         "86d1d20a40cefcf3dd410ff6967e0491613b77bf73ea8f1bf2e335cf9cf7d57a",
+				Height:       1545999,
+				MajorVersion: 6,
+				MinorVersion: 6,
+				Nonce:        3246403956,
+				NumTxes:      20,
+				OrphanStatus: false,
+				PrevHash:     "0ef6e948f77b8f8806621003f5de24b1bcbea150bc0e376835aea099674a5db5",
+				Reward:       5025593029981,
+				Timestamp:    1523002893,
+			},
+			{
+				BlockSize:    13322,
+				Depth:        16084,
+				Difficulty:   134716086238,
+				Hash:         "b408bf4cfcd7de13e7e370c84b8314c85b24f0ba4093ca1d6eeb30b35e34e91a",
+				Height:       1546000,
+				MajorVersion: 7,
+				MinorVersion: 7,
+				Nonce:        3737164176,
+				NumTxes:      1,
+				OrphanStatus: false,
+				PrevHash:     "86d1d20a40cefcf3dd410ff6967e0491613b77bf73ea8f1bf2e335cf9cf7d57a",
+				Reward:       4851952181070,
+				Timestamp:    1523002931,
+			},
+		},
+		Untrusted: false,
+	})
 }
 
 func TestDaemonGetBlock(t *testing.T) {
@@ -337,10 +442,27 @@ func TestDaemonGetBlock(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetBlock(&GetBlockRequest{})
+	res, err := w.GetBlock(&GetBlockRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+	is := is.New(t)
+
+	is.Equal(res.Blob, "0102f4bedfb405b61c58b2e0be53fad5ef9d9731a55e8a81d972b8d90ed07c04fd37ca6403ff786e0600000195d83701ffd9d73704ee84ddb42102378b043c1724c92c69d923d266fe86477d3a5ddd21145062e148c64c5767700880c0fc82aa020273733cbd6e6218bda671596462a4b062f95cfe5e1dbb5b990dacb30e827d02f280f092cbdd080247a5dab669770da69a860acde21616a119818e1a489bb3c4b1b6b3c50547bc0c80e08d84ddcb01021f7e4762b8b755e3e3c72b8610cc87b9bc25d1f0a87c0c816ebb952e4f8aff3d2b01fd0a778957f4f3103a838afda488c3cdadf2697b3d34ad71234282b2fad9100e02080000000bdfc2c16c00")
+	is.Equal(res.BlockHeader.BlockSize, uint64(210))
+	is.Equal(res.BlockHeader.Depth, uint64(649772))
+	is.Equal(res.BlockHeader.Difficulty, uint64(815625611))
+	is.Equal(res.BlockHeader.Hash, "e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6")
+	is.Equal(res.BlockHeader.Height, uint64(912345))
+	is.Equal(res.BlockHeader.MajorVersion, uint64(1))
+	is.Equal(res.BlockHeader.MinorVersion, uint64(2))
+	is.Equal(res.BlockHeader.Nonce, uint64(1646))
+	is.Equal(res.BlockHeader.NumTxes, uint64(0))
+	is.Equal(res.BlockHeader.OrphanStatus, false)
+	is.Equal(res.BlockHeader.PrevHash, "b61c58b2e0be53fad5ef9d9731a55e8a81d972b8d90ed07c04fd37ca6403ff78")
+	is.Equal(res.BlockHeader.Reward, uint64(7388968946286))
+	is.Equal(res.BlockHeader.Timestamp, uint64(1452793716))
+
 }
 
 func TestDaemonGetConnections(t *testing.T) {
@@ -379,10 +501,38 @@ func TestDaemonGetConnections(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetConnections()
+	res, err := w.GetConnections()
 	if err != nil {
 		t.Error(err)
 	}
+
+	is.New(t).Equal(res, &GetConnectionsResponse{
+		Connections: []Connection{
+			{
+				Address:         "173.90.69.136:62950",
+				AvgDownload:     0,
+				AvgUpload:       2,
+				ConnectionID:    "083c301a3030329a487adb12ad981d2c",
+				CurrentDownload: 0,
+				CurrentUpload:   2,
+				Height:          1562127,
+				Host:            "173.90.69.136",
+				Incoming:        true,
+				IP:              "173.90.69.136",
+				LiveTime:        8,
+				LocalIP:         false,
+				Localhost:       false,
+				PeerID:          "c959fbfbed9e44fb",
+				Port:            "62950",
+				RecvCount:       259,
+				RecvIdleTime:    8,
+				SendCount:       24342,
+				SendIdleTime:    8,
+				State:           "state_normal",
+				SupportFlags:    0,
+			},
+		},
+	})
 }
 
 func TestDaemonGetInfo(t *testing.T) {
@@ -426,10 +576,40 @@ func TestDaemonGetInfo(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetInfo()
+	res, err := w.GetInfo()
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetInfoResponse{
+		AltBlocksCount:           6,
+		BlockSizeLimit:           600000,
+		BlockSizeMedian:          129017,
+		BootstrapDaemonAddress:   "",
+		BusySyncing:              "false",
+		CumulativeDifficulty:     14121125493385685,
+		Difficulty:               60580751777,
+		FreeSpace:                138758750208,
+		GreyPeerlistSize:         4998,
+		Height:                   1562168,
+		HeightWithoutBootstrap:   1562168,
+		IncomingConnectionsCount: 2,
+		Mainnet:                  true,
+		Offline:                  false,
+		OutgoingConnectionsCount: 8,
+		RPCConnectionsCount:      2,
+		Stagenet:                 false,
+		StartTime:                1524751757,
+		Synchronized:             true,
+		Target:                   120,
+		TargetHeight:             1562063,
+		Testnet:                  false,
+		TopBlockHash:             "7a7ba647080844073fdd8e3a069e00554c773d6e6863354dba1dec45a43f5592",
+		TxCount:                  2759894,
+		TxPoolSize:               755,
+		Untrusted:                false,
+		WasBootstrapEverUsed:     false,
+		WhitePeerlistSize:        1000,
+	})
 }
 
 func TestDaemonHardForkInfo(t *testing.T) {
@@ -453,10 +633,21 @@ func TestDaemonHardForkInfo(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.HardForkInfo()
+	res, err := w.HardForkInfo()
 	if err != nil {
 		t.Error(err)
 	}
+
+	is.New(t).Equal(res, &HardForkInfoResponse{
+		EarliestHeight: 1009827,
+		Enabled:        false,
+		State:          2,
+		Threshold:      0,
+		Version:        1,
+		Votes:          7277,
+		Voting:         2,
+		Window:         10080,
+	})
 }
 
 func TestDaemonSetBans(t *testing.T) {
@@ -472,7 +663,7 @@ func TestDaemonSetBans(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.SetBans(&SetBansRequest{})
+	err := w.SetBans(&SetBansRequest{})
 	if err != nil {
 		t.Error(err)
 	}
@@ -500,10 +691,24 @@ func TestDaemonGetBans(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetBans()
+	res, err := w.GetBans()
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetBansResponse{
+		Bans: []Ban{
+			{
+				Host:    "102.168.1.51",
+				IP:      855746662,
+				Seconds: 22,
+			},
+			{
+				Host:    "192.168.1.50",
+				IP:      838969536,
+				Seconds: 28,
+			},
+		},
+	})
 }
 
 func TestDaemonFlushTxpool(t *testing.T) {
@@ -519,7 +724,7 @@ func TestDaemonFlushTxpool(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.FlushTxpool(&FlushTxpoolRequest{})
+	err := w.FlushTxpool(&FlushTxpoolRequest{})
 	if err != nil {
 		t.Error(err)
 	}
@@ -545,10 +750,21 @@ func TestDaemonGetOutputHistogram(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetOutputHistogram(&GetOutputHistogramRequest{})
+	res, err := w.GetOutputHistogram(&GetOutputHistogramRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetOutputHistogramResponse{
+		Histogram: []Histogram{
+			{
+				Amount:            20000000000,
+				RecentInstances:   0,
+				TotalInstances:    381458,
+				UnlockedInstances: 0,
+			},
+		},
+		Untrusted: false,
+	})
 }
 
 func TestDaemonGetVersion(t *testing.T) {
@@ -566,10 +782,14 @@ func TestDaemonGetVersion(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetVersion()
+	res, err := w.GetVersion()
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetVersionResponse{
+		Version:   65555,
+		Untrusted: false,
+	})
 }
 
 func TestDaemonGetCoinbaseTxSum(t *testing.T) {
@@ -587,10 +807,14 @@ func TestDaemonGetCoinbaseTxSum(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetCoinbaseTxSum(&GetCoinbaseTxSumRequest{})
+	res, err := w.GetCoinbaseTxSum(&GetCoinbaseTxSumRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetCoinbaseTxSumResponse{
+		EmissionAmount: 9387854817320,
+		FeeAmount:      83981380000,
+	})
 }
 
 func TestDaemonGetFeeEstimate(t *testing.T) {
@@ -608,10 +832,14 @@ func TestDaemonGetFeeEstimate(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetFeeEstimate(&GetFeeEstimateRequest{})
+	res, err := w.GetFeeEstimate(&GetFeeEstimateRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetFeeEstimateResponse{
+		Fee:       187610000,
+		Untrusted: false,
+	})
 }
 
 func TestDaemonGetAlternateChains(t *testing.T) {
@@ -633,10 +861,20 @@ func TestDaemonGetAlternateChains(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetAlternateChains()
+	res, err := w.GetAlternateChains()
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetAlternateChainsResponse{
+		Chains: []Chain{
+			{
+				BlockHash:  "697cf03c89a9b118f7bdf11b1b3a6a028d7b3617d2d0ed91322c5709acf75625",
+				Difficulty: 14114729638300280,
+				Height:     1562062,
+				Length:     2,
+			},
+		},
+	})
 }
 
 func TestDaemonRelayTx(t *testing.T) {
@@ -652,7 +890,7 @@ func TestDaemonRelayTx(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.RelayTx(&RelayTxRequest{})
+	err := w.RelayTx(&RelayTxRequest{})
 	if err != nil {
 		t.Error(err)
 	}
@@ -698,10 +936,42 @@ func TestDaemonSyncInfo(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.SyncInfo()
+	res, err := w.SyncInfo()
 	if err != nil {
 		t.Error(err)
 	}
+
+	is.New(t).Equal(res, &SyncInfoResponse{
+		Height: 1563543,
+		Peers: []Peer{
+			{
+				Info: Connection{
+					Address:         "70.109.53.128:60064",
+					AvgDownload:     0,
+					AvgUpload:       5,
+					ConnectionID:    "204067223b9b3415c265dd25ad29ee48",
+					CurrentDownload: 0,
+					CurrentUpload:   1,
+					Height:          1559975,
+					Host:            "70.109.53.128",
+					Incoming:        true,
+					IP:              "70.109.53.128",
+					LiveTime:        38,
+					LocalIP:         false,
+					Localhost:       false,
+					PeerID:          "96b8545dbc7a8866",
+					Port:            "60064",
+					RecvCount:       1580,
+					RecvIdleTime:    28,
+					SendCount:       203603,
+					SendIdleTime:    8,
+					State:           "state_normal",
+					SupportFlags:    1,
+				},
+			},
+		},
+		TargetHeight: 1564067,
+	})
 }
 
 func TestDaemonGetTxpoolBacklog(t *testing.T) {
@@ -719,10 +989,14 @@ func TestDaemonGetTxpoolBacklog(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetTxpoolBacklog()
+	res, err := w.GetTxpoolBacklog()
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetTxpoolBacklogResponse{
+		Backlog:   []TXBacklogEntry{},
+		Untrusted: false,
+	})
 }
 
 func TestDaemonGetOutputDistribution(t *testing.T) {
@@ -744,10 +1018,20 @@ func TestDaemonGetOutputDistribution(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetOutputDistribution(&GetOutputDistributionRequest{})
+	res, err := w.GetOutputDistribution(&GetOutputDistributionRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+	is.New(t).Equal(res, &GetOutputDistributionResponse{
+		Distributions: []Distribution{
+			{
+				Amount:       2628780000,
+				Base:         0,
+				Distribution: []uint64{},
+				StartHeight:  1462078,
+			},
+		},
+	})
 }
 
 func TestDaemonGenerateBlocks(t *testing.T) {
@@ -775,7 +1059,6 @@ func TestDaemonGenerateBlocks(t *testing.T) {
 	is.New(t).Equal(res, &GenerateBlocksResponse{
 		Blocks:    []string{"49b712db7760e3728586f8434ee8bc8d7b3d410dac6bb6e98bf5845c83b917e4"},
 		Height:    9783,
-		Status:    "OK",
 		Untrusted: false,
 	})
 }

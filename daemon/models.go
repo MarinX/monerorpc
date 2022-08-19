@@ -4,8 +4,6 @@ package daemon
 type GetBlockCountResponse struct {
 	// Number of blocks in longest chain seen by the node.
 	Count uint64 `json:"count"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 }
 
 // GetBlockTemplateRequest represents the request model for GetBlockTemplate
@@ -32,16 +30,13 @@ type GetBlockTemplateResponse struct {
 	PrevHash string `json:"prev_hash"`
 	// Reserved offset.
 	ReservedOffset uint64 `json:"reserved_offset"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
-	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
-	Untrusted bool `json:"untrusted"`
+	Untrusted      bool   `json:"untrusted"`
 }
 
 // SubmitBlockResponse represents the response model for SubmitBlock
 type SubmitBlockResponse struct {
 	// Block submit status.
-	Status string `json:"status"`
+
 }
 
 // BlockHeader A structure containing block header information.
@@ -69,7 +64,7 @@ type BlockHeader struct {
 	// The hash of the block immediately preceding this block in the chain.
 	PrevHash string `json:"prev_hash"`
 	// The amount of new atomic units generated in this block and rewarded to the miner. Note: 1 XMR = 1e12 atomic units
-	Reward uint64 `json:"reward "`
+	Reward uint64 `json:"reward"`
 	// The unix time at which the block was recorded into the blockchain.
 	Timestamp uint64 `json:"timestamp"`
 }
@@ -78,10 +73,7 @@ type BlockHeader struct {
 type GetLastBlockHeaderResponse struct {
 	// A structure containing block header information
 	BlockHeader BlockHeader `json:"block_header"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
-	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
-	Untrusted bool `json:"untrusted"`
+	Untrusted   bool        `json:"untrusted"`
 }
 
 // GetBlockHeaderByHashRequest represents the request model for GetBlockHeaderByHash
@@ -94,10 +86,7 @@ type GetBlockHeaderByHashRequest struct {
 type GetBlockHeaderByHashResponse struct {
 	// A structure containing block header information
 	BlockHeader BlockHeader `json:"block_header"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
-	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
-	Untrusted bool `json:"untrusted"`
+	Untrusted   bool        `json:"untrusted"`
 }
 
 // GetBlockHeaderByHeightRequest represents the request model for GetBlockHeaderByHeight
@@ -110,10 +99,7 @@ type GetBlockHeaderByHeightRequest struct {
 type GetBlockHeaderByHeightResponse struct {
 	// A structure containing block header information
 	BlockHeader BlockHeader `json:"block_header"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
-	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
-	Untrusted bool `json:"untrusted"`
+	Untrusted   bool        `json:"untrusted"`
 }
 
 // GetBlockHeadersRangeRequest represents the request model for GetBlockHeadersRange
@@ -127,11 +113,8 @@ type GetBlockHeadersRangeRequest struct {
 // GetBlockHeadersRangeResponse represents the response model for GetBlockHeadersRange
 type GetBlockHeadersRangeResponse struct {
 	// (a structure containing block header information. See get_last_block_header).
-	Headers []BlockHeader `json:"headers"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
-	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
-	Untrusted bool `json:"untrusted"`
+	Headers   []BlockHeader `json:"headers"`
+	Untrusted bool          `json:"untrusted"`
 }
 
 // GetBlockRequest represents the request model for GetBlock
@@ -149,11 +132,8 @@ type GetBlockResponse struct {
 	// A structure containing block header information
 	BlockHeader BlockHeader `json:"block_header"`
 	// SON formatted block details
-	JSON string `json:"json"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
-	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
-	Untrusted bool `json:"untrusted"`
+	JSON      string `json:"json"`
+	Untrusted bool   `json:"untrusted"`
 }
 
 // Connection model
@@ -245,8 +225,6 @@ type GetInfoResponse struct {
 	Stagenet bool `json:"stagenet"`
 	// Start time of the daemon, as UNIX time.
 	StartTime uint64 `json:"start_time"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 	// States if the node is synchronized (true) or not (false).
 	Synchronized bool `json:"synchronized"`
 	// Current target for next proof of work.
@@ -277,8 +255,6 @@ type HardForkInfoResponse struct {
 	Enabled bool `json:"enabled"`
 	// Current hard fork state: 0 (There is likely a hard fork), 1 (An update is needed to fork properly), or 2 (Everything looks good).
 	State uint64 `json:"state"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 	// Minimum percent of votes to trigger hard fork. Default is 80.
 	Threshold uint64 `json:"threshold"`
 	// The major block version for the fork.
@@ -309,30 +285,16 @@ type SetBansRequest struct {
 	Bans []Ban `json:"bans"`
 }
 
-// SetBansResponse represents the response model for SetBans
-type SetBansResponse struct {
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
-}
-
 // GetBansResponse represents the response model for GetBans
 type GetBansResponse struct {
 	// List of banned nodes
 	Bans []Ban `json:"bans"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 }
 
 // FlushTxpoolRequest represents the request model for FlushTxpool
 type FlushTxpoolRequest struct {
 	// Optional, list of transactions IDs to flush from pool (all tx ids flushed if empty).
 	TxIDs []string `json:"txids,omitempty"`
-}
-
-// FlushTxpoolResponse represents the response model for FlushTxpool
-type FlushTxpoolResponse struct {
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 }
 
 // GetOutputHistogramRequest represents the request model for GetOutputHistogram
@@ -358,17 +320,12 @@ type Histogram struct {
 type GetOutputHistogramResponse struct {
 	// list of histogram entries
 	Histogram []Histogram `json:"histogram"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
 	Untrusted bool `json:"untrusted"`
 }
 
 // GetVersionResponse represents the response model for GetVersion
 type GetVersionResponse struct {
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
-	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
 	Untrusted bool `json:"untrusted"`
 	// Version
 	Version uint64 `json:"version"`
@@ -388,8 +345,6 @@ type GetCoinbaseTxSumResponse struct {
 	EmissionAmount uint64 `json:"emission_amount"`
 	// amount of fees in atomic units
 	FeeAmount uint64 `json:"fee_amount"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 }
 
 // GetFeeEstimateRequest represents the request model for GetFeeEstimate
@@ -404,8 +359,6 @@ type GetFeeEstimateResponse struct {
 	Fee uint64 `json:"fee"`
 	// Final fee should be rounded up to an even multiple of this value
 	QuantizationMask uint64 `json:"quantization_mask"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
 	Untrusted bool `json:"untrusted"`
 }
@@ -426,20 +379,12 @@ type Chain struct {
 type GetAlternateChainsResponse struct {
 	// array of chains
 	Chains []Chain `json:"chains"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 }
 
 // RelayTxRequest represents the request model for RelayTx
 type RelayTxRequest struct {
 	// list of transaction IDs to relay
 	TxIDs []string `json:"txids"`
-}
-
-// RelayTxResponse represents the response model for RelayTx
-type RelayTxResponse struct {
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 }
 
 // Peer model
@@ -472,8 +417,6 @@ type SyncInfoResponse struct {
 	Peers []Peer `json:"peers"`
 	// array of span structure, defined as follows (optional, absent if node is fully synced)
 	Spans []Span `json:"spans"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 	// target height the node is syncing from (will be undefined if node is fully synced)
 	TargetHeight uint64 `json:"target_height"`
 }
@@ -492,8 +435,6 @@ type TXBacklogEntry struct {
 type GetTxpoolBacklogResponse struct {
 	// array of structures tx_backlog_entry (in binary form)
 	Backlog []TXBacklogEntry `json:"backlog"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
 	Untrusted bool `json:"untrusted"`
 }
@@ -522,8 +463,6 @@ type Distribution struct {
 type GetOutputDistributionResponse struct {
 	// array of structure distribution
 	Distributions []Distribution `json:"distributions"`
-	// General RPC error code. "OK" means everything looks good.
-	Status string `json:"status"`
 }
 
 type GenerateBlocksRequest struct {
@@ -538,6 +477,5 @@ type GenerateBlocksRequest struct {
 type GenerateBlocksResponse struct {
 	Blocks    []string `json:"blocks"`
 	Height    uint64   `json:"height"`
-	Status    string   `json:"status"`
 	Untrusted bool     `json:"untrusted"`
 }
