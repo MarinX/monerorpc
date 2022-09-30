@@ -189,20 +189,34 @@ type GetConnectionsResponse struct {
 
 // GetInfoResponse represents the response model for GetInfo
 type GetInfoResponse struct {
+	// Current time approximated from chain data, as Unix time.
+	AdjustedTime uint64 `json:"adjusted_time"`
 	// Number of alternative blocks to main chain.
 	AltBlocksCount uint64 `json:"alt_blocks_count"`
 	// Maximum allowed block size
 	BlockSizeLimit uint64 `json:"block_size_limit"`
 	// Median block size of latest 100 blocks
 	BlockSizeMedian uint64 `json:"block_size_median"`
+	// Maximum allowed adjusted block size based on latest 100000 blocks
+	BlockWeightLimit uint64 `json:"block_weight_limit"`
+	// Median adjusted block size of latest 100000 blocks
+	BlockWeightMedian uint64 `json:"block_weight_median"`
 	// bootstrap node to give immediate usability to wallets while syncing by proxying RPC to it. (Note: the replies may be untrustworthy).
 	BootstrapDaemonAddress string `json:"bootstrap_daemon_address"`
 	// States if new blocks are being added (true) or not (false).
-	BusySyncing string `json:"busy_syncing"`
+	BusySyncing bool `json:"busy_syncing"`
+	// If payment for RPC is enabled, the number of credits available to the requesting client. Otherwise, 0.
+	Credits uint64 `json:"credits"`
 	// Cumulative difficulty of all blocks in the blockchain.
 	CumulativeDifficulty uint64 `json:"cumulative_difficulty"`
+	// Most-significant 64 bits of the 128-bit cumulative difficulty.
+	CumulativeDifficultyTop64 uint64 `json:"cumulative_difficulty_top64"`
+	// The size of the blockchain database, in bytes.
+	DatabaseSize uint64 `json:"database_size"`
 	// Network difficulty (analogous to the strength of the network)
 	Difficulty uint64 `json:"difficulty"`
+	// Most-significant 64 bits of the 128-bit network difficulty.
+	DifficultyTop64 uint64 `json:"difficulty_top64"`
 	// Available disk space on the node.
 	FreeSpace uint64 `json:"free_space"`
 	// Grey Peerlist Size
@@ -215,6 +229,8 @@ type GetInfoResponse struct {
 	IncomingConnectionsCount uint64 `json:"incoming_connections_count"`
 	// States if the node is on the mainnet (true) or not (false).
 	Mainnet bool `json:"mainnet"`
+	// Network type (one of mainnet, stagenet or testnet).
+	NetType string `json:"nettype"`
 	// States if the node is offline (true) or online (false).
 	Offline bool `json:"offline"`
 	// Number of peers that you are connected to and getting information from.
@@ -235,16 +251,26 @@ type GetInfoResponse struct {
 	Testnet bool `json:"testnet"`
 	// Hash of the highest block in the chain.
 	TopBlockHash string `json:"top_block_hash"`
+	// If payment for RPC is enabled, the hash of the highest block in the chain. Otherwise, empty.
+	TopHash string `json:"top_hash"`
 	// Total number of non-coinbase transaction in the chain.
 	TxCount uint64 `json:"tx_count"`
 	// Number of transactions that have been broadcast but not included in a block.
 	TxPoolSize uint64 `json:"tx_pool_size"`
 	// States if the result is obtained using the bootstrap mode, and is therefore not trusted (true), or when the daemon is fully synced (false).
 	Untrusted bool `json:"untrusted"`
+	//  States if a newer Monero software version is available.
+	UpdateAvailable bool `json:"update_available"`
+	// The version of the Monero software the node is running.
+	Version string `json:"version"`
 	// States if a bootstrap node has ever been used since the daemon started.
 	WasBootstrapEverUsed bool `json:"was_bootstrap_ever_used"`
 	// White Peerlist Size
 	WhitePeerlistSize uint64 `json:"white_peerlist_size"`
+	// Cumulative difficulty of all blocks in the blockchain as a hexadecimal string representing a 128-bit number.
+	WideCumulativeDifficulty string `json:"wide_cumulative_difficulty"`
+	// Network difficulty (analogous to the strength of the network) as a hexadecimal string representing a 128-bit number.
+	WideDifficulty string `json:"wide_difficulty"`
 }
 
 // HardForkInfoResponse represents the response model for HardForkInfo
