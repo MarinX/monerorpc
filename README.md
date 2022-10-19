@@ -1,6 +1,6 @@
 # Monero RPC Client in Go
 
-[![Build Status](https://travis-ci.org/MarinX/monerorpc.svg?branch=master)](https://travis-ci.org/MarinX/monerorpc)
+[![Audit](https://github.com/MarinX/monerorpc/actions/workflows/audit.yml/badge.svg)](https://github.com/MarinX/monerorpc/actions/workflows/audit.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/MarinX/monerorpc)](https://goreportcard.com/report/github.com/MarinX/monerorpc)
 [![GoDoc](https://godoc.org/github.com/MarinX/monerorpc?status.svg)](https://godoc.org/github.com/MarinX/monerorpc)
 [![License MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
