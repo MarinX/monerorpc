@@ -854,6 +854,8 @@ type Transfer struct {
 	Address string `json:"address"`
 	// Amount transferred.
 	Amount uint64 `json:"amount"`
+	// Individual amounts if multiple where received
+	Amounts []uint64 `json:"amounts"`
 	// Number of block mined since the block containing this transaction (or block height at which the transaction should be added to a block if not yet confirmed).
 	Confirmations uint64 `json:"confirmations"`
 	// JSON objects containing transfer destinations:
@@ -864,6 +866,7 @@ type Transfer struct {
 	Fee uint64 `json:"fee"`
 	// Height of the first block that confirmed this transfer (0 if not mined yet).
 	Height uint64 `json:"height"`
+	Locked bool   `json:"locked"`
 	// Note about this transfer.
 	Note string `json:"note"`
 	// Payment ID for this transfer.
@@ -904,6 +907,8 @@ type GetTransferByTxidRequest struct {
 type GetTransferByTxidResponse struct {
 	// JSON object containing payment information:
 	Transfer Transfer `json:"transfer"`
+	// If the list length is > 1 then multiple outputs where received in this transaction, each of which has its own transfer JSON object
+	Transfers []Transfer `json:"transfers"`
 }
 
 // DescribeTransferRequest represents the request model for DescribeTransfer

@@ -1114,31 +1114,55 @@ func TestWalletGetTransferByTxid(t *testing.T) {
 		"jsonrpc": "2.0",
 		"result": {
 		  "transfer": {
-			"address": "55LTR8KniP4LQGJSPtbYDacR7dz8RBFnsfAKMaMuwUNYX6aQbBcovzDPyrQF9KXF9tVU6Xk3K8no1BywnJX6GvZX8yJsXvt",
-			"amount": 300000000000,
-			"confirmations": 1,
-			"destinations": [{
-			  "address": "7BnERTpvL5MbCLtj5n9No7J5oE5hHiB3tVCK5cjSvCsYWD2WRJLFuWeKTLiXo5QJqt2ZwUaLy2Vh1Ad51K7FNgqcHgjW85o",
-			  "amount": 100000000000
-			},{
-			  "address": "77Vx9cs1VPicFndSVgYUvTdLCJEZw9h81hXLMYsjBCXSJfUehLa9TDW3Ffh45SQa7xb6dUs18mpNxfUhQGqfwXPSMrvKhVp",
-			  "amount": 200000000000
-			}],
+			"address": "53zii2WaqQwZU4oUsCUcrHgaSv2CrUGCSFJLdQnkLPyH7ZLPYHjtoHhi14dqjF6jywNRknYLwbate2eGv8TuZcS7GuR7wMY",
+			"amount": 100000000000,
+			"amounts": [100000000000],
+			"confirmations": 19,
 			"double_spend_seen": false,
-			"fee": 21650200000,
-			"height": 153624,
+			"fee": 53840000,
+			"height": 1140109,
+			"locked": false,
 			"note": "",
 			"payment_id": "0000000000000000",
 			"subaddr_index": {
 			  "major": 0,
 			  "minor": 0
 			},
+			"subaddr_indices": [{
+			  "major": 0,
+			  "minor": 0
+			}],
 			"suggested_confirmations_threshold": 1,
-			"timestamp": 1535918400,
-			"txid": "c36258a276018c3a4bc1f195a7fb530f50cd63a4fa765fb7c6f7f49fc051762a",
-			"type": "out",
+			"timestamp": 1658360753,
+			"txid": "765f7124d01bd2eb2d4e7e59aa44a28c24339a41e4009f463955b087017b0ca3",
+			"type": "in",
 			"unlock_time": 0
-		  }
+		  },
+		  "transfers": [{
+			"address": "53zii2WaqQwZU4oUsCUcrHgaSv2CrUGCSFJLdQnkLPyH7ZLPYHjtoHhi14dqjF6jywNRknYLwbate2eGv8TuZcS7GuR7wMY",
+			"amount": 100000000000,
+			"amounts": [100000000000],
+			"confirmations": 19,
+			"double_spend_seen": false,
+			"fee": 53840000,
+			"height": 1140109,
+			"locked": false,
+			"note": "",
+			"payment_id": "0000000000000000",
+			"subaddr_index": {
+			  "major": 0,
+			  "minor": 0
+			},
+			"subaddr_indices": [{
+			  "major": 0,
+			  "minor": 0
+			}],
+			"suggested_confirmations_threshold": 1,
+			"timestamp": 1658360753,
+			"txid": "765f7124d01bd2eb2d4e7e59aa44a28c24339a41e4009f463955b087017b0ca3",
+			"type": "in",
+			"unlock_time": 0
+		  }]
 		}
 	  }`
 	server := setupServer(t, "get_transfer_by_txid", output)
@@ -1146,10 +1170,46 @@ func TestWalletGetTransferByTxid(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	_, err := w.GetTransferByTxid(&GetTransferByTxidRequest{})
+	res, err := w.GetTransferByTxid(&GetTransferByTxidRequest{})
 	if err != nil {
 		t.Error(err)
 	}
+	is := is.New(t)
+	is.Equal(res.Transfer.Address, "53zii2WaqQwZU4oUsCUcrHgaSv2CrUGCSFJLdQnkLPyH7ZLPYHjtoHhi14dqjF6jywNRknYLwbate2eGv8TuZcS7GuR7wMY")
+	is.Equal(res.Transfer.Amount, uint64(100000000000))
+	is.Equal(res.Transfer.Amounts, []uint64{100000000000})
+	is.Equal(res.Transfer.Confirmations, uint64(19))
+	is.Equal(res.Transfer.DoubleSpendSeen, false)
+	is.Equal(res.Transfer.Fee, uint64(53840000))
+	is.Equal(res.Transfer.Height, uint64(1140109))
+	is.Equal(res.Transfer.Locked, false)
+	is.Equal(res.Transfer.Note, "")
+	is.Equal(res.Transfer.PaymentID, "0000000000000000")
+	is.Equal(res.Transfer.SubaddrIndex.Major, uint64(0))
+	is.Equal(res.Transfer.SubaddrIndex.Minor, uint64(0))
+	is.Equal(res.Transfer.SuggestedConfirmationsThreshold, uint64(1))
+	is.Equal(res.Transfer.Timestamp, uint64(1658360753))
+	is.Equal(res.Transfer.TxID, "765f7124d01bd2eb2d4e7e59aa44a28c24339a41e4009f463955b087017b0ca3")
+	is.Equal(res.Transfer.Type, "in")
+	is.Equal(res.Transfer.UnlockTime, uint64(0))
+	is.Equal(res.Transfers[0].Address, "53zii2WaqQwZU4oUsCUcrHgaSv2CrUGCSFJLdQnkLPyH7ZLPYHjtoHhi14dqjF6jywNRknYLwbate2eGv8TuZcS7GuR7wMY")
+	is.Equal(res.Transfers[0].Amount, uint64(100000000000))
+	is.Equal(res.Transfers[0].Amounts, []uint64{100000000000})
+	is.Equal(res.Transfers[0].Confirmations, uint64(19))
+	is.Equal(res.Transfers[0].DoubleSpendSeen, false)
+	is.Equal(res.Transfers[0].Fee, uint64(53840000))
+	is.Equal(res.Transfers[0].Height, uint64(1140109))
+	is.Equal(res.Transfers[0].Locked, false)
+	is.Equal(res.Transfers[0].Note, "")
+	is.Equal(res.Transfers[0].PaymentID, "0000000000000000")
+	is.Equal(res.Transfers[0].SubaddrIndex.Major, uint64(0))
+	is.Equal(res.Transfers[0].SubaddrIndex.Minor, uint64(0))
+	is.Equal(res.Transfers[0].SuggestedConfirmationsThreshold, uint64(1))
+	is.Equal(res.Transfers[0].Timestamp, uint64(1658360753))
+	is.Equal(res.Transfers[0].TxID, "765f7124d01bd2eb2d4e7e59aa44a28c24339a41e4009f463955b087017b0ca3")
+	is.Equal(res.Transfers[0].Type, "in")
+	is.Equal(res.Transfers[0].UnlockTime, uint64(0))
+
 }
 
 func TestWalletDescribeTransfer(t *testing.T) {
