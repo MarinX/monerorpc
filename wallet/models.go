@@ -1144,7 +1144,7 @@ type RefreshResponse struct {
 // AutoRefreshRequest represents the request model for AutoRefresh
 type AutoRefreshRequest struct {
 	// Enable or disable automatic refreshing (default = true).
-	Enable bool `json:"enable,omitempty"`
+	Enable *bool `json:"enable,omitempty"`
 	// The period of the wallet refresh cycle (i.e. time between refreshes) in seconds.
 	Period uint64 `json:"period,omitempty"`
 }
@@ -1190,7 +1190,7 @@ type GenerateFromKeysRequest struct {
 	// The wallet's password.
 	Password string `json:"password"`
 	//(Defaults to true) If true, save the current wallet before generating the new wallet.
-	AutosaveCurrent bool `json:"autosave_current"`
+	AutosaveCurrent *bool `json:"autosave_current,omitempty"`
 }
 
 // GenerateFromKeysResponse represents the response model for GenerateFromKeys
@@ -1224,7 +1224,7 @@ type RestoreDeterministicWalletRequest struct {
 	// Offset used to derive a new seed from the given mnemonic to recover a secret wallet from the mnemonic phrase.
 	SeedOffset string `json:"seed_offset,omitempty"`
 	//Whether to save the currently open RPC wallet before closing it (Defaults to true).
-	AutosaveCurrent bool `json:"autosave_current"`
+	AutosaveCurrent *bool `json:"autosave_current,omitempty"`
 }
 
 // RestoreDeterministicWalletResponse represents the response model for RestoreDeterministicWallet
