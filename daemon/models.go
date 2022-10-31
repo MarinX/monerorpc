@@ -3,7 +3,8 @@ package daemon
 // GetBlockCountResponse represents the response model for GetBlockCount
 type GetBlockCountResponse struct {
 	// Number of blocks in longest chain seen by the node.
-	Count uint64 `json:"count"`
+	Count     uint64 `json:"count"`
+	Untrusted bool   `json:"untrusted"`
 }
 
 // GetBlockTemplateRequest represents the request model for GetBlockTemplate
