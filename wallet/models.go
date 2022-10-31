@@ -1130,7 +1130,7 @@ type DeleteAddressBookRequest struct {
 // RefreshRequest represents the request model for Refresh
 type RefreshRequest struct {
 	// (Optional) The block height from which to start refreshing.
-	StartHeight uint64 `json:"start_height,omitempty"`
+	StartHeight *uint64 `json:"start_height,omitempty"`
 }
 
 // RefreshResponse represents the response model for Refresh
