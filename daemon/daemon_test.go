@@ -69,9 +69,10 @@ func TestDaemonGetBlockCount(t *testing.T) {
 		"jsonrpc": "2.0",  
 		"result": {  
 		  "count": 993163,  
-		  "status": "OK"  
+		  "status": "OK",
+		  "untrusted": false
 		}  
-	  }  `
+	  }`
 	server := setupServer(t, "get_block_count", output)
 	defer server.Close()
 
@@ -82,7 +83,8 @@ func TestDaemonGetBlockCount(t *testing.T) {
 		t.Error(err)
 	}
 	is.New(t).Equal(res, &GetBlockCountResponse{
-		Count: 993163,
+		Count:     993163,
+		Untrusted: false,
 	})
 }
 
