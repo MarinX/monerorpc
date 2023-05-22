@@ -692,45 +692,73 @@ func TestWalletGetBulkPayments(t *testing.T) {
 
 func TestWalletIncomingTransfers(t *testing.T) {
 	output := `{
-		"id": "0",
-		"jsonrpc": "2.0",
-		"result": {
-		  "transfers": [{
-			"amount": 60000000000000,
-			"global_index": 122405,
-			"key_image": "768f5144777eb23477ab7acf83562581d690abaf98ca897c03a9d2b900eb479b",
-			"spent": true,
-			"subaddr_index": {
-        		"major": 0,
-        		"minor": 3
-      		},
-			"tx_hash": "f53401f21c6a43e44d5dd7a90eba5cf580012ad0e15d050059136f8a0da34f6b",
-			"tx_size": 159
-		  },{
-			"amount": 27126892247503,
-			"global_index": 594994,
-			"key_image": "7e561394806afd1be61980cc3431f6ef3569fa9151cd8d234f8ec13aa145695e",
-			"spent": false,
-			"subaddr_index": {
-        		"major": 0,
-        		"minor": 3
-      		},
-			"tx_hash": "106d4391a031e5b735ded555862fec63233e34e5fa4fc7edcfdbe461c275ae5b",
-			"tx_size": 157
-		  },{
-			"amount": 27169374733655,
-			"global_index": 594997,
-			"key_image": "e76c0a3bfeaae35e4173712f782eb34011198e26b990225b71aa787c8ba8a157",
-			"spent": false,
-			"subaddr_index": {
-        		"major": 0,
-        		"minor": 3
-      		},
-			"tx_hash": "0bd959b59117ee1254bd8e5aa8e77ec04ef744144a1ffb2d5c1eb9380a719621",
-			"tx_size": 158
-		  }]
-		}
-	  }`
+	"id": "0",
+	"jsonrpc": "2.0",
+	"result": {
+		"transfers": [
+			{
+				"amount": 65523760000,
+				"block_height": 1555542,
+				"frozen": false,
+				"global_index": 5352374,
+				"key_image": "727bfeb8c28dab760c9c5f646072bd55477557b0c4a7bfd0bdadd751f8120d96",
+				"pubkey": "b3a500acfa163763ccf6d2c10262294f8c287df3e5cac6309408adf94dc50335",
+				"spent": true,
+				"subaddr_index": {
+					"major": 0,
+					"minor": 1
+				},
+				"tx_hash": "4b540773ddf9e819f0df47708f3d3c9f7f62933150b90edc89103d36d42ca4b7",
+				"unlocked": true
+			},
+			{
+				"amount": 7989160000,
+				"block_height": 1764640,
+				"frozen": false,
+				"global_index": 8765446,
+				"key_image": "fd70f985df78f13c8b77836cea91322f20c6f4ea80cff8d3274826008e74cde0",
+				"pubkey": "8e19b5426dbfe6501f607d68fb1ca1a717f87c950af538cdff96f7e97746822b",
+				"spent": true,
+				"subaddr_index": {
+					"major": 0,
+					"minor": 0
+				},
+				"tx_hash": "2aa6843cb5de53f2260bcd222cbf9b90c724b7250d6c0ef039ed1d5ad43fa829",
+				"unlocked": true
+			},
+			{
+				"amount": 100000,
+				"block_height": 2363583,
+				"frozen": false,
+				"global_index": 32533306,
+				"key_image": "0d99656358a8499a78e9baff5e3a5ca5aa19ebf8a9fd21e6edd5d54b3d45c667",
+				"pubkey": "2feb0deabe3b6cf36b0a5d7addf843c9d585e0f95702e7462b0fac36a2ef7df4",
+				"spent": false,
+				"subaddr_index": {
+					"major": 0,
+					"minor": 1
+				},
+				"tx_hash": "e53e9cfb1fe15495e0d6edc94eceb7b9e9471a4eb3a31ddd3e020be12fad5ea1",
+				"unlocked": true
+			},
+			{
+				"amount": 10000000000,
+				"block_height": 2663277,
+				"frozen": false,
+				"global_index": 56874042,
+				"key_image": "4638a83f2d792204575930919ee36f6c4bd039e10bcabaa0fc74dd24e4aab7c9",
+				"pubkey": "b328b6d97bc6de9ef17b7dfe16147c5a1e395d012f238cee7395c91666ee1822",
+				"spent": true,
+				"subaddr_index": {
+					"major": 0,
+					"minor": 3
+				},
+				"tx_hash": "a5fdd2da7f23574a620b0bcddd921b806a397186e61fbe736d5ef7522411aa5f",
+				"unlocked": true
+			}
+		]
+	}
+}`
 	server := setupServer(t, "incoming_transfers", output)
 	defer server.Close()
 

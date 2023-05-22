@@ -10,14 +10,14 @@ import (
 // NewPaymentID64 generates a 64 bit payment ID
 func NewPaymentID64() string {
 	buf := make([]byte, 8)
-	rand.Read(buf)
+	_, _ = rand.Read(buf)
 	return hex.EncodeToString(buf)
 }
 
 // NewPaymentID256 generates a 256 bit payment ID (hex encoded).
 func NewPaymentID256() string {
 	buf := make([]byte, 32)
-	rand.Read(buf)
+	_, _ = rand.Read(buf)
 	return hex.EncodeToString(buf)
 }
 
