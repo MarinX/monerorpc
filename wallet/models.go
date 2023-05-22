@@ -594,7 +594,7 @@ type IncomingTransfer struct {
 	GlobalIndex uint64 `json:"global_index"`
 	// Key image for the incoming transfer's unspent output.
 	KeyImage string `json:"key_image"`
-	// Indicates if output has been spent.
+	// Spent indicates if the output has been spent.
 	Spent bool `json:"spent"`
 	// Subaddress index for incoming transfer.
 	SubaddrIndex Index `json:"subaddr_index"`
