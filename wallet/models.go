@@ -579,27 +579,29 @@ type IncomingTransfersRequest struct {
 	// Return transfers for this account. (defaults to 0)
 	AccountIndex uint64 `json:"account_index,omitempty"`
 	// Return transfers sent to these subaddresses.
-	SubaddrIndices Index `json:"subaddr_indices,omitempty"`
-	// Enable verbose output, return key image if true.
-	Verbose bool `json:"verbose,omitempty"`
+	SubaddrIndices *Index `json:"subaddr_indices,omitempty"`
 }
 
 // IncomingTransfer model
 type IncomingTransfer struct {
 	// Amount of this transfer.
 	Amount uint64 `json:"amount"`
+	// BlockHeight is the block height at which this transfer was confirmed.
+	BlockHeight uint64 `json:"block_height"`
+	// Frozen indicates whether the output key was frozen by freeze
+	Frozen bool `json:"frozen"`
 	// Mostly internal use, can be ignored by most users.
 	GlobalIndex uint64 `json:"global_index"`
-	// Key image for the incoming transfer's unspent output (empty unless verbose is true).
+	// Key image for the incoming transfer's unspent output.
 	KeyImage string `json:"key_image"`
-	// Indicates if this transfer has been spent.
+	// Spent indicates if the output has been spent.
 	Spent bool `json:"spent"`
 	// Subaddress index for incoming transfer.
 	SubaddrIndex Index `json:"subaddr_index"`
 	// Several incoming transfers may share the same hash if they were in the same transaction.
 	TxHash string `json:"tx_hash"`
-	// Size of transaction in bytes.
-	TxSize uint64 `json:"tx_size"`
+	// Unlocked indicates if the output is spendable.
+	Unlocked bool `json:"unlocked"`
 }
 
 // IncomingTransfersResponse represents the response model for IncomingTransfers
