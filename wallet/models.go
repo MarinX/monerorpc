@@ -63,19 +63,20 @@ type GetBalanceResponse struct {
 
 // GetAddressRequest represents the request model for GetAddress
 type GetAddressRequest struct {
-	// Return subaddresses for this account.
+	// Return addresses for this account.
 	AccountIndex uint32 `json:"account_index"`
-	// List of subaddresses to return from an account.
-	AddressIndices uint32 `json:"address_indices,omitempty"`
+	// (Optional, defaults to all) List of address indices to return from the
+	// account. Index 0 is primary, 1+ are subadddresses.
+	AddressIndices []uint32 `json:"address_index,omitempty"`
 }
 
 // Address model
 type Address struct {
-	// The 95-character hex (sub)address string.
+	// The base58 (sub)address string.
 	Address string `json:"address"`
 	// Label of the (sub)address
 	Label string `json:"label"`
-	// index of the subaddress
+	// index of the (sub)address, 0 is primary
 	AddressIndex uint32 `json:"address_index"`
 	// states if the (sub)address has already received funds
 	Used bool `json:"used"`
@@ -83,9 +84,9 @@ type Address struct {
 
 // GetAddressResponse represents the response model for GetAddress
 type GetAddressResponse struct {
-	// The 95-character hex address string of the monero-wallet-rpc in session.
+	// The primary address of the requested account index.
 	Address string `json:"address"`
-	// array of addresses informations
+	// Array of address information entries
 	Addresses []Address `json:"addresses"`
 }
 
@@ -111,21 +112,24 @@ type GetAddressIndexResponse struct {
 
 // CreateAddressRequest represents the request model for CreateAddress
 type CreateAddressRequest struct {
-	// Create a new address for this account.
+	// Create the new subaddress(es) in this account.
 	AccountIndex uint32 `json:"account_index"`
-	// Label for the new address.
+	// (Optional) Label for the new address(es).
 	Label string `json:"label,omitempty"`
-	// (Optional, defaults to 1) Number of addresses to create.
-	Count uint32
+	// (Optional) Number of addresses to create (range: 1 to 64, defaults to 1).
+	Count uint32 `json:"count,omitempty"`
 }
 
 // CreateAddressResponse represents the response model for CreateAddress
 type CreateAddressResponse struct {
-	// Newly created address. Base58 representation of the public keys.
+	// 1st newly created address. Base58 representation of the public keys.
 	Address string `json:"address"`
-	// Index of the new address under the input account.
-	AddressIndex    uint32 `json:"address_index"`
-	AddressIndecies []uint32
+	// Index of the first new address created in the requested account.
+	AddressIndex uint32 `json:"address_index"`
+	// List of all address indices created.
+	AddressIndices []uint32 `json:"address_indices"`
+	// List of all addresses created
+	Addresses []string `json:"addresses"`
 }
 
 // LabelAddressRequest represents the request model for LabelAddress
