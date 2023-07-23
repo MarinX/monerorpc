@@ -3,7 +3,7 @@ package wallet
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -56,7 +56,7 @@ func getClient(uri string, client *http.Client) *MockMoneroRPC {
 
 func setupServer(t *testing.T, method string, output string) *httptest.Server {
 	server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
-		buff, _ := ioutil.ReadAll(req.Body)
+		buff, _ := io.ReadAll(req.Body)
 		t.Log(string(buff))
 		rw.Write([]byte(output))
 	}))
@@ -1213,8 +1213,8 @@ func TestWalletGetTransferByTxid(t *testing.T) {
 	is.Equal(res.Transfer.Locked, false)
 	is.Equal(res.Transfer.Note, "")
 	is.Equal(res.Transfer.PaymentID, "0000000000000000")
-	is.Equal(res.Transfer.SubaddrIndex.Major, uint64(0))
-	is.Equal(res.Transfer.SubaddrIndex.Minor, uint64(0))
+	is.Equal(res.Transfer.SubaddrIndex.Major, uint32(0))
+	is.Equal(res.Transfer.SubaddrIndex.Minor, uint32(0))
 	is.Equal(res.Transfer.SuggestedConfirmationsThreshold, uint64(1))
 	is.Equal(res.Transfer.Timestamp, uint64(1658360753))
 	is.Equal(res.Transfer.TxID, "765f7124d01bd2eb2d4e7e59aa44a28c24339a41e4009f463955b087017b0ca3")
@@ -1230,8 +1230,8 @@ func TestWalletGetTransferByTxid(t *testing.T) {
 	is.Equal(res.Transfers[0].Locked, false)
 	is.Equal(res.Transfers[0].Note, "")
 	is.Equal(res.Transfers[0].PaymentID, "0000000000000000")
-	is.Equal(res.Transfers[0].SubaddrIndex.Major, uint64(0))
-	is.Equal(res.Transfers[0].SubaddrIndex.Minor, uint64(0))
+	is.Equal(res.Transfers[0].SubaddrIndex.Major, uint32(0))
+	is.Equal(res.Transfers[0].SubaddrIndex.Minor, uint32(0))
 	is.Equal(res.Transfers[0].SuggestedConfirmationsThreshold, uint64(1))
 	is.Equal(res.Transfers[0].Timestamp, uint64(1658360753))
 	is.Equal(res.Transfers[0].TxID, "765f7124d01bd2eb2d4e7e59aa44a28c24339a41e4009f463955b087017b0ca3")

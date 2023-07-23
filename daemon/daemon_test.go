@@ -3,7 +3,7 @@ package daemon
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -56,7 +56,7 @@ func getClient(uri string, client *http.Client) *MockMoneroRPC {
 
 func setupServer(t *testing.T, method string, output string) *httptest.Server {
 	server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
-		buff, _ := ioutil.ReadAll(req.Body)
+		buff, _ := io.ReadAll(req.Body)
 		t.Log(string(buff))
 		rw.Write([]byte(output))
 	}))

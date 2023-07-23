@@ -23,16 +23,16 @@ type SetDaemonRequest struct {
 // GetBalanceRequest represents the request model for GetBalance
 type GetBalanceRequest struct {
 	// Return balance for this account.
-	AccountIndex uint64 `json:"account_index"`
+	AccountIndex uint32 `json:"account_index"`
 	// Return balance detail for those subaddresses.
-	AddressIndices uint64 `json:"address_indices,omitempty"`
+	AddressIndices uint32 `json:"address_indices,omitempty"`
 }
 
 // PerSubaddress model
 type PerSubaddress struct {
 	AccountIndex uint32 `json:"account_index"`
 	// Index of the subaddress in the account.
-	AddressIndex uint64 `json:"address_index"`
+	AddressIndex uint32 `json:"address_index"`
 	// Address at this index. Base58 representation of the public keys.
 	Address string `json:"address"`
 	// Balance for the subaddress (locked or unlocked).
@@ -64,9 +64,9 @@ type GetBalanceResponse struct {
 // GetAddressRequest represents the request model for GetAddress
 type GetAddressRequest struct {
 	// Return subaddresses for this account.
-	AccountIndex uint64 `json:"account_index"`
+	AccountIndex uint32 `json:"account_index"`
 	// List of subaddresses to return from an account.
-	AddressIndex []uint64 `json:"address_index,omitempty"`
+	AddressIndices uint32 `json:"address_indices,omitempty"`
 }
 
 // Address model
@@ -76,7 +76,7 @@ type Address struct {
 	// Label of the (sub)address
 	Label string `json:"label"`
 	// index of the subaddress
-	AddressIndex uint64 `json:"address_index"`
+	AddressIndex uint32 `json:"address_index"`
 	// states if the (sub)address has already received funds
 	Used bool `json:"used"`
 }
@@ -98,23 +98,25 @@ type GetAddressIndexRequest struct {
 // Index model
 type Index struct {
 	// Account index.
-	Major uint64 `json:"major"`
-	// Address index.
-	Minor uint64 `json:"minor"`
+	Major uint32 `json:"major"`
+	// Subaddress index.
+	Minor uint32 `json:"minor"`
 }
 
 // GetAddressIndexResponse represents the response model for GetAddressIndex
 type GetAddressIndexResponse struct {
-	// subaddress informations
+	// subaddress information
 	Index Index `json:"index"`
 }
 
 // CreateAddressRequest represents the request model for CreateAddress
 type CreateAddressRequest struct {
 	// Create a new address for this account.
-	AccountIndex uint64 `json:"account_index"`
+	AccountIndex uint32 `json:"account_index"`
 	// Label for the new address.
 	Label string `json:"label,omitempty"`
+	// (Optional, defaults to 1) Number of addresses to create.
+	Count uint32
 }
 
 // CreateAddressResponse represents the response model for CreateAddress
@@ -122,7 +124,8 @@ type CreateAddressResponse struct {
 	// Newly created address. Base58 representation of the public keys.
 	Address string `json:"address"`
 	// Index of the new address under the input account.
-	AddressIndex uint64 `json:"address_index"`
+	AddressIndex    uint32 `json:"address_index"`
+	AddressIndecies []uint32
 }
 
 // LabelAddressRequest represents the request model for LabelAddress
@@ -166,7 +169,7 @@ type GetAccountsRequest struct {
 // SubaddressAcount model
 type SubaddressAcount struct {
 	// Index of the account.
-	AccountIndex uint64 `json:"account_index"`
+	AccountIndex uint32 `json:"account_index"`
 	// Balance of the account (locked or unlocked).
 	Balance uint64 `json:"balance"`
 	// Base64 representation of the first subaddress in the account.
@@ -198,7 +201,7 @@ type CreateAccountRequest struct {
 // CreateAccountResponse represents the response model for CreateAccount
 type CreateAccountResponse struct {
 	// Index of the new account.
-	AccountIndex uint64 `json:"account_index"`
+	AccountIndex uint32 `json:"account_index"`
 	// Address for this account. Base58 representation of the public keys.
 	Address string `json:"address"`
 }
@@ -206,7 +209,7 @@ type CreateAccountResponse struct {
 // LabelAccountRequest represents the request model for LabelAccount
 type LabelAccountRequest struct {
 	// Apply label to account at this index.
-	AccountIndex uint64 `json:"account_index"`
+	AccountIndex uint32 `json:"account_index"`
 	// Label for the account.
 	Label string `json:"label"`
 }
@@ -269,9 +272,9 @@ type TransferRequest struct {
 	// array of destinations to receive XMR
 	Destinations []Destination `json:"destinations"`
 	// Transfer from this account index. (Defaults to 0)
-	AccountIndex uint64 `json:"account_index,omitempty"`
+	AccountIndex uint32 `json:"account_index,omitempty"`
 	// Transfer from this set of subaddresses. (Defaults to empty - all indices)
-	SubaddrIndices []uint64 `json:"subaddr_indices,omitempty"`
+	SubaddrIndices []uint32 `json:"subaddr_indices,omitempty"`
 	// Set a priority for the transaction. Accepted Values are: 0-3 for: default, unimportant, normal, elevated, priority.
 	Priority uint64 `json:"priority,omitempty"`
 	// Number of outputs from the blockchain to mix with (0 means no mixing).
@@ -315,9 +318,9 @@ type TransferSplitRequest struct {
 	// array of destinations to receive XMR
 	Destinations []Destination `json:"destinations"`
 	// Transfer from this account index. (Defaults to 0)
-	AccountIndex uint64 `json:"account_index,omitempty"`
+	AccountIndex uint32 `json:"account_index,omitempty"`
 	// Transfer from this set of subaddresses. (Defaults to empty - all indices)
-	SubaddrIndices []uint64 `json:"subaddr_indices,omitempty"`
+	SubaddrIndices []uint32 `json:"subaddr_indices,omitempty"`
 	// Number of outputs from the blockchain to mix with (0 means no mixing).
 	Mixin uint64 `json:"mixin"`
 	// Sets ringsize to n (mixin + 1).
@@ -425,9 +428,9 @@ type SweepAllRequest struct {
 	// Destination public address.
 	Address string `json:"address"`
 	// Sweep transactions from this account.
-	AccountIndex uint64 `json:"account_index"`
+	AccountIndex uint32 `json:"account_index"`
 	// Sweep from this set of subaddresses in the account.
-	SubaddrIndices []uint64 `json:"subaddr_indices,omitempty"`
+	SubaddrIndices []uint32 `json:"subaddr_indices,omitempty"`
 	// Priority for sending the sweep transfer, partially determines fee.
 	Priority uint64 `json:"priority,omitempty"`
 	// Number of outputs from the blockchain to mix with (0 means no mixing).
@@ -472,9 +475,9 @@ type SweepSingleRequest struct {
 	// Destination public address.
 	Address string `json:"address"`
 	// Sweep transactions from this account.
-	AccountIndex uint64 `json:"account_index"`
+	AccountIndex uint32 `json:"account_index"`
 	// Sweep from this set of subaddresses in the account.
-	SubaddrIndices []uint64 `json:"subaddr_indices,omitempty"`
+	SubaddrIndices []uint32 `json:"subaddr_indices,omitempty"`
 	// Priority for sending the sweep transfer, partially determines fee.
 	Priority uint64 `json:"priority,omitempty"`
 	// Number of outputs from the blockchain to mix with (0 means no mixing).
@@ -577,7 +580,7 @@ type IncomingTransfersRequest struct {
 	// "all": all the transfers, "available": only transfers which are not yet spent, OR "unavailable": only transfers which are already spent.
 	TransferType string `json:"transfer_type"`
 	// Return transfers for this account. (defaults to 0)
-	AccountIndex uint64 `json:"account_index,omitempty"`
+	AccountIndex uint32 `json:"account_index,omitempty"`
 	// Return transfers sent to these subaddresses.
 	SubaddrIndices *Index `json:"subaddr_indices,omitempty"`
 }
@@ -797,7 +800,7 @@ type GetReserveProofRequest struct {
 	// Proves all wallet balance to be disposable.
 	All bool `json:"all"`
 	// Specify the account from witch to prove reserve. (ignored if all is set to true)
-	AccountIndex uint64 `json:"account_index"`
+	AccountIndex uint32 `json:"account_index"`
 	// Amount (in atomic units) to prove the account has for reserve. (ignored if all is set to true)
 	Amount uint64 `json:"amount"`
 	// (Optional) add a message to the signature to further authenticate the prooving process.
@@ -845,9 +848,9 @@ type GetTransfersRequest struct {
 	// (Opional) Maximum block height to scan for transfers, if filtering by height is enabled (defaults to max block height).
 	MaxHeight uint64 `json:"max_height,omitempty"`
 	// (Optional) Index of the account to query for transfers. (defaults to 0)
-	AccountIndex uint64 `json:"account_index,omitempty"`
+	AccountIndex uint32 `json:"account_index,omitempty"`
 	// (Optional) List of subaddress indices to query for transfers. (Defaults to empty - all indices)
-	SubaddrIndices []uint64 `json:"subaddr_indices,omitempty"`
+	SubaddrIndices []uint32 `json:"subaddr_indices,omitempty"`
 }
 
 // Transfer model
@@ -902,7 +905,7 @@ type GetTransferByTxidRequest struct {
 	// Transaction ID used to find the transfer.
 	TxID string `json:"txid"`
 	// (Optional) Index of the account to query for the transfer.
-	AccountIndex uint64 `json:"account_index,omitempty"`
+	AccountIndex uint32 `json:"account_index,omitempty"`
 }
 
 // GetTransferByTxidResponse represents the response model for GetTransferByTxid
