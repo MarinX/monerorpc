@@ -66,7 +66,8 @@ type GetAddressRequest struct {
 	// Return addresses for this account.
 	AccountIndex uint32 `json:"account_index"`
 	// (Optional, defaults to all) List of address indices to return from the
-	// account. Index 0 is primary, 1+ are subadddresses.
+	// account. Index 0 is of account 0 is the primary address, all others
+	// are subadddresses.
 	AddressIndices []uint32 `json:"address_index,omitempty"`
 }
 
@@ -76,7 +77,7 @@ type Address struct {
 	Address string `json:"address"`
 	// Label of the (sub)address
 	Label string `json:"label"`
-	// index of the (sub)address, 0 is primary
+	// index of the (sub)address
 	AddressIndex uint32 `json:"address_index"`
 	// states if the (sub)address has already received funds
 	Used bool `json:"used"`
