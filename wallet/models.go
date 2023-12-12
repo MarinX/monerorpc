@@ -162,7 +162,7 @@ type ValidateAddressResponse struct {
 	// Specifies which of the three Monero networks (mainnet, stagenet, and testnet) the address belongs to.
 	Nettype string `json:"nettype"`
 	// True if the address is OpenAlias-formatted.
-	OpenaliasAddress bool `json:"openalias_address"`
+	OpenaliasAddress string `json:"openalias_address"`
 }
 
 // GetAccountsRequest represents the request model for GetAccounts
