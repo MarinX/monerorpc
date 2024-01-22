@@ -104,11 +104,11 @@ type Wallet interface {
 	// Verify a signature on a string.
 	Verify(req *VerifyRequest) (*VerifyResponse, error)
 	// ExportOutputs Export all outputs in hex format.
-	ExportOutputs() error
+	ExportOutputs(req *ExportOutputsRequest) (*ExportOutputsResponse, error)
 	// ImportOutputs Import outputs in hex format.
 	ImportOutputs(req *ImportOutputsRequest) (*ImportOutputsResponse, error)
 	// ExportKeyImages Export a signed set of key images.
-	ExportKeyImages() error
+	ExportKeyImages(req *ExportKeyImagesRequest) (*ExportKeyImagesResponse, error)
 	// ImportKeyImages Import signed key images list and verify their spent status.
 	ImportKeyImages(req *ImportKeyImagesRequest) (*ImportKeyImagesResponse, error)
 	// MakeURI Create a payment URI using the official URI spec.
@@ -456,8 +456,10 @@ func (w *wallet) Verify(req *VerifyRequest) (*VerifyResponse, error) {
 	return res, err
 }
 
-func (w *wallet) ExportOutputs() error {
-	return w.client.Do("export_outputs", nil, nil)
+func (w *wallet) ExportOutputs(req *ExportOutputsRequest) (*ExportOutputsResponse, error) {
+	res := new(ExportOutputsResponse)
+	err := w.client.Do("export_outputs", req, res)
+	return res, err
 }
 
 func (w *wallet) ImportOutputs(req *ImportOutputsRequest) (*ImportOutputsResponse, error) {
@@ -466,8 +468,10 @@ func (w *wallet) ImportOutputs(req *ImportOutputsRequest) (*ImportOutputsRespons
 	return res, err
 }
 
-func (w *wallet) ExportKeyImages() error {
-	return w.client.Do("export_key_images", nil, nil)
+func (w *wallet) ExportKeyImages(req *ExportKeyImagesRequest) (*ExportKeyImagesResponse, error) {
+	res := new(ExportKeyImagesResponse)
+	err := w.client.Do("export_key_images", req, res)
+	return res, err
 }
 
 func (w *wallet) ImportKeyImages(req *ImportKeyImagesRequest) (*ImportKeyImagesResponse, error) {
