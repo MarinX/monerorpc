@@ -1027,7 +1027,7 @@ type SignedImage struct {
 	Signature string `json:"signature"`
 }
 
-// ExportKeyImagesRequest represent the response model for ExportKeyImages
+// ExportKeyImagesRequest represent the request model for ExportKeyImages
 type ExportKeyImagesRequest struct {
 	// If true, export all key images. Otherwise, export key images since the last export. (default = false)
 	All bool `json:"all"`
