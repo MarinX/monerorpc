@@ -997,7 +997,7 @@ type VerifyResponse struct {
 	Good bool `json:"good"`
 }
 
-// ExportOutputsRequest represents the response model for ExportOutputs
+// ExportOutputsRequest represents the request model for ExportOutputs
 type ExportOutputsRequest struct {
 	// If true, export all outputs. Otherwise, export outputs since the last export. (default = false)
 	All bool `json:"all"`
