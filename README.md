@@ -164,11 +164,11 @@ type Wallet interface {
 	// Verify a signature on a string.
 	Verify(req *VerifyRequest) (*VerifyResponse, error)
 	// ExportOutputs Export all outputs in hex format.
-	ExportOutputs() error
+	ExportOutputs(req *ExportOutputsRequest) (*ExportOutputsResponse, error)
 	// ImportOutputs Import outputs in hex format.
 	ImportOutputs(req *ImportOutputsRequest) (*ImportOutputsResponse, error)
 	// ExportKeyImages Export a signed set of key images.
-	ExportKeyImages() error
+	ExportKeyImages(req *ExportKeyImagesRequest) (*ExportKeyImagesResponse, error)
 	// ImportKeyImages Import signed key images list and verify their spent status.
 	ImportKeyImages(req *ImportKeyImagesRequest) (*ImportKeyImagesResponse, error)
 	// MakeURI Create a payment URI using the official URI spec.

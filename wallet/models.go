@@ -997,6 +997,18 @@ type VerifyResponse struct {
 	Good bool `json:"good"`
 }
 
+// ExportOutputsRequest represents the request model for ExportOutputs
+type ExportOutputsRequest struct {
+	// If true, export all outputs. Otherwise, export outputs since the last export. (default = false)
+	All bool `json:"all"`
+}
+
+// ExportOutputsResponse represents the response model for ExportOutputs
+type ExportOutputsResponse struct {
+	// Wallet outputs in hex format.
+	OutputsDataHex string `json:"outputs_data_hex"`
+}
+
 // ImportOutputsRequest represents the request model for ImportOutputs
 type ImportOutputsRequest struct {
 	// Wallet outputs in hex format.
@@ -1013,6 +1025,18 @@ type ImportOutputsResponse struct {
 type SignedImage struct {
 	KeyImage  string `json:"key_image"`
 	Signature string `json:"signature"`
+}
+
+// ExportKeyImagesRequest represent the request model for ExportKeyImages
+type ExportKeyImagesRequest struct {
+	// If true, export all key images. Otherwise, export key images since the last export. (default = false)
+	All bool `json:"all"`
+}
+
+// ExportKeyImagesResponse represent the response model for ExportKeyImages
+type ExportKeyImagesResponse struct {
+	// Array of signed key images:
+	SignedKeyImages []SignedImage `json:"signed_key_images"`
 }
 
 // ImportKeyImagesRequest represents the request model for ImportKeyImages

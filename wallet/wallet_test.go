@@ -240,7 +240,7 @@ func TestWalletValidateAddress(t *testing.T) {
 		  "integrated": false,
 		  "subaddress": false,
 		  "nettype": "mainnet",
-		  "openalias_address": false
+		  "openalias_address": ""
 		}
 	  }`
 	server := setupServer(t, "validate_address", output)
@@ -1325,7 +1325,7 @@ func TestWalletExportOutputs(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	err := w.ExportOutputs()
+	_, err := w.ExportOutputs(&ExportOutputsRequest{})
 	if err != nil {
 		t.Error(err)
 	}
@@ -1369,7 +1369,7 @@ func TestWalletExportKeyImages(t *testing.T) {
 
 	w := New(getClient(server.URL, server.Client()))
 
-	err := w.ExportKeyImages()
+	_, err := w.ExportKeyImages(&ExportKeyImagesRequest{})
 	if err != nil {
 		t.Error(err)
 	}
