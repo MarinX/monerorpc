@@ -76,6 +76,13 @@ func (c *MoneroRPC) Do(method string, req interface{}, res interface{}) error {
 		if err == json2.ErrNullResult {
 			return nil
 		}
+		// Some monero-wallet-rpc versions return {"error":{"code":0,"message":""}}
+		// instead of an empty result (e.g. get_transfers with pool:true when the pool
+		// is empty). Code 0 with no message is not a valid JSON-RPC error — treat it
+		// the same as a null result.
+		if rpcErr, ok := err.(*json2.Error); ok && rpcErr.Code == 0 && rpcErr.Message == "" && rpcErr.Data == nil {
+			return nil
+		}
 	}
 
 	return err
