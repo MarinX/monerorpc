@@ -856,6 +856,8 @@ type GetTransfersRequest struct {
 	AccountIndex uint32 `json:"account_index,omitempty"`
 	// (Optional) List of subaddress indices to query for transfers. (Defaults to empty - all indices)
 	SubaddrIndices []uint32 `json:"subaddr_indices,omitempty"`
+	// (Optional) If true, return transfers for all accounts; account_index and subaddr_indices are ignored.
+	AllAccounts bool `json:"all_accounts,omitempty"`
 }
 
 // Transfer model
